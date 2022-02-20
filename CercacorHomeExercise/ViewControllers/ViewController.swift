@@ -31,6 +31,7 @@ class MainViewController: UIViewController {
     }
     
     private func performCertificateValidation() {
+        self.textField.resignFirstResponder()
         guard let text = textField.text, let url = URL(string: text) else { return }
         PinningManager.shared.callApi(url: url, isPinning: self.pinningSwitch.isOn, isCertificatePinning: !self.certificatePinningSwitch.isOn) { response in
             DispatchQueue.main.sync {
