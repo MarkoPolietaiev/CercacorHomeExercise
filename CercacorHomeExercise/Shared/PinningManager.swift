@@ -14,6 +14,7 @@ class PinningManager: NSObject, URLSessionDelegate {
     static let shared = PinningManager()
     
     var isCertificatePinning: Bool = false
+    var isPinning: Bool = false
     var hardcodedPublicKey: String = "EumkTYs+nSg5q/mGi38Fjyg/I7lBU59PhayJy7/fx5k="
     
     let rsa2048Asn1Header:[UInt8] = [
@@ -38,74 +39,95 @@ class PinningManager: NSObject, URLSessionDelegate {
             completionHandler(.cancelAuthenticationChallenge, nil)
             return
         }
-        
-        // Check if we want pinning via certificate or public key
-        if self.isCertificatePinning {
-            // Compare remote and local certificates
-            
-            let certificate = SecTrustGetCertificateAtIndex(serverTrust, 2)
+        if self.isPinning {
+            // Check if we want pinning via certificate or public key
+            if self.isCertificatePinning {
+                // Compare remote and local certificates
+                
+                let certificate = SecTrustGetCertificateAtIndex(serverTrust, 2)
+                
+                let policy = NSMutableArray()
+                policy.add(SecPolicyCreateSSL(true, challenge.protectionSpace.host as CFString))
+                
+                // Let swift Security library check if certificate is trusted
+                let isSecuredServer = SecTrustEvaluateWithError(serverTrust, nil)
+                
+                // Get data from certificate we got
+                let remoteCertData: NSData = SecCertificateCopyData(certificate!)
+                
+                // Init path to our local certificate
+                guard let pathToCertificate = Bundle.main.path(forResource: "GTS Root R1", ofType: "cer") else {
+                    fatalError("No local certificate found")
+                }
+                let localCertData = NSData(contentsOfFile: pathToCertificate)
+                
+                // If certificate is trusted and remote data is equal to local then validation was successful
+                if isSecuredServer, remoteCertData.isEqual(to: localCertData! as Data) {
+                    completionHandler(.useCredential, URLCredential.init(trust: serverTrust))
+                } else {
+                    completionHandler(.cancelAuthenticationChallenge, nil)
+                }
+            } else {
+                // Compare public keys
+                if let certificate =  SecTrustGetCertificateAtIndex(serverTrust, 2) {
+                    
+                    // Get public key from certificate we got
+                    let serverPublicKey = SecCertificateCopyKey(certificate)
+                    let serverPublicKeyData = SecKeyCopyExternalRepresentation(serverPublicKey!, nil)
+                    let data:Data = serverPublicKeyData! as Data
+                    let serverHashKey = sha256(data: data)
+                    
+                    // If remote public key and our local hardcoded public keys are equal then validation was successful
+                    if serverHashKey == self.hardcodedPublicKey {
+                        print("public key Pinning Completed Successfully")
+                        completionHandler(.useCredential, URLCredential.init(trust: serverTrust))
+                    } else {
+                        completionHandler(.cancelAuthenticationChallenge,nil)
+                    }
+                }
+            }
+        } else {
+            let certificate = SecTrustGetCertificateAtIndex(serverTrust, 0)
             
             let policy = NSMutableArray()
             policy.add(SecPolicyCreateSSL(true, challenge.protectionSpace.host as CFString))
             
-            // Let swift Security library check if caertificate is trusted
-            let isSecuredServer = SecTrustEvaluateWithError(serverTrust, nil)
-            
-            // Get data from certificate we got
-            let remoteCertData: NSData = SecCertificateCopyData(certificate!)
-            
-            // Init path to our local certificate
-            guard let pathToCertificate = Bundle.main.path(forResource: "GTS Root R1", ofType: "cer") else {
-                fatalError("No local certificate found")
-            }
-            let localCertData = NSData(contentsOfFile: pathToCertificate)
-            
-            // If certificate is trusted and remote data is equal to local then validation was successful
-            if isSecuredServer, remoteCertData.isEqual(to: localCertData! as Data) {
+            // Let swift Security library check if certificate is trusted
+            let isSecured = SecTrustEvaluateWithError(serverTrust, nil)
+            if isSecured {
                 completionHandler(.useCredential, URLCredential.init(trust: serverTrust))
             } else {
                 completionHandler(.cancelAuthenticationChallenge, nil)
             }
-        } else {
-            // Compare public keys
-            if let certificate =  SecTrustGetCertificateAtIndex(serverTrust, 2) {
-                // Get public key from certificate we got
-                let serverPublicKey = SecCertificateCopyKey(certificate)
-                let serverPublicKeyData = SecKeyCopyExternalRepresentation(serverPublicKey!, nil)
-                let data:Data = serverPublicKeyData! as Data
-                let serverHashKey = sha256(data: data)
-                
-                // If remote public key and our local hardcoded public keys are equal then validation was successful
-                if serverHashKey == self.hardcodedPublicKey {
-                    print("public key Pinning Completed Successfully")
-                    completionHandler(.useCredential, URLCredential.init(trust: serverTrust))
-                } else {
-                    completionHandler(.cancelAuthenticationChallenge,nil)
-                }
-            }
+            
+
         }
     }
     
-    func callApi(url: URL, isCertificatePinning: Bool, completion: @escaping ((String) -> () )) {
+    func callApi(url: URL, isPinning: Bool, isCertificatePinning: Bool, completion: @escaping ((String) -> () )) {
         let session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: nil)
+        self.isPinning = isPinning
         self.isCertificatePinning = isCertificatePinning
         session.dataTask(with: url) { data, response, error in
             if let error = error {
                 if error.localizedDescription == "canceled" {
                     completion("Pinning failed")
                 } else {
-                    completion("Something went wrong")
+                    completion("Something went wrong. Possibly certificate is untrusted")
                 }
             }
             if let data = data {
                 
 //                let str = String(decoding: data, as: UTF8.self)
 //                print(str)
-                
-                if self.isCertificatePinning {
-                    completion("Pinning successful with Certificate")
+                if isPinning {
+                    if self.isCertificatePinning {
+                        completion("Pinning successful with Certificate")
+                    } else {
+                        completion("Pinning successful with Public Key")
+                    }
                 } else {
-                    completion("Pinning successful with Public Key")
+                    completion("Certificate is trusted")
                 }
                 
             }

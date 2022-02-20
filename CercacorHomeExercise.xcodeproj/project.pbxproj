@@ -15,6 +15,7 @@
 		6115B64C27C0D1ED0060D811 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6115B64A27C0D1ED0060D811 /* LaunchScreen.storyboard */; };
 		6115B65627C0D8B80060D811 /* PinningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6115B65527C0D8B80060D811 /* PinningManager.swift */; };
 		6115B65A27C0DBF80060D811 /* GTS Root R1.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6115B65927C0DBF70060D811 /* GTS Root R1.cer */; };
+		61B6A9CF27C248ED00F5FD8F /* mycert.cer in Resources */ = {isa = PBXBuildFile; fileRef = 61B6A9CE27C248ED00F5FD8F /* mycert.cer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,8 @@
 		6115B64D27C0D1ED0060D811 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6115B65527C0D8B80060D811 /* PinningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinningManager.swift; sourceTree = "<group>"; };
 		6115B65927C0DBF70060D811 /* GTS Root R1.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTS Root R1.cer"; sourceTree = "<group>"; };
+		61B6A9CD27C2485F00F5FD8F /* my_certificate_to_pin.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = my_certificate_to_pin.der; sourceTree = "<group>"; };
+		61B6A9CE27C248ED00F5FD8F /* mycert.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mycert.cer; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +64,8 @@
 			isa = PBXGroup;
 			children = (
 				6115B65927C0DBF70060D811 /* GTS Root R1.cer */,
+				61B6A9CE27C248ED00F5FD8F /* mycert.cer */,
+				61B6A9CD27C2485F00F5FD8F /* my_certificate_to_pin.der */,
 				6115B65427C0D8A70060D811 /* Shared */,
 				6115B65327C0D26B0060D811 /* ViewControllers */,
 				6115B63F27C0D1EA0060D811 /* AppDelegate.swift */,
@@ -151,6 +156,7 @@
 				6115B64C27C0D1ED0060D811 /* LaunchScreen.storyboard in Resources */,
 				6115B64927C0D1ED0060D811 /* Assets.xcassets in Resources */,
 				6115B64727C0D1EA0060D811 /* Main.storyboard in Resources */,
+				61B6A9CF27C248ED00F5FD8F /* mycert.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,10 +11,15 @@ class MainViewController: UIViewController {
 
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var returnButton: UIButton!
+    @IBOutlet weak var pinningSwitch: UISwitch!
     @IBOutlet weak var certificatePinningSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.pinningSwitch.isOn = false
+        self.certificatePinningSwitch.onTintColor = .clear
+        self.certificatePinningSwitch.tintColor = .clear
+        self.certificatePinningSwitch.isEnabled = false
         self.textField.text = "https://www.google.com"
         // Do any additional setup after loading the view.
     }
@@ -27,11 +32,15 @@ class MainViewController: UIViewController {
     
     private func performCertificateValidation() {
         guard let text = textField.text, let url = URL(string: text) else { return }
-        PinningManager.shared.callApi(url: url, isCertificatePinning: self.certificatePinningSwitch.isOn) { response in
+        PinningManager.shared.callApi(url: url, isPinning: self.pinningSwitch.isOn, isCertificatePinning: !self.certificatePinningSwitch.isOn) { response in
             DispatchQueue.main.sync {
                 self.presentAlert(response)
             }
         }
+    }
+    
+    @IBAction func pinningChanged(_ sender: Any) {
+        self.certificatePinningSwitch.isEnabled = self.pinningSwitch.isOn
     }
     
     @IBAction func returnButtonPressed(_ sender: Any) {
