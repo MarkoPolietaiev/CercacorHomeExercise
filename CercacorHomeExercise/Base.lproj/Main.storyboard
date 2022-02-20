@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Main View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="CercacorHomeExercise" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uPK-9T-bxK">
+                                <rect key="frame" x="25" y="431" width="269" height="34"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="sZc-tM-s0w"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Certificate pinning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDx-lN-FT3">
+                                <rect key="frame" x="25" y="395" width="300" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Sn-Bc-yWv">
+                                <rect key="frame" x="340" y="385" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TESTED ON &quot;https://google.com&quot;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K0h-sJ-1SG">
+                                <rect key="frame" x="25" y="353" width="364" height="22"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LHc-NL-emV">
+                                <rect key="frame" x="314" y="431" width="75" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="8tx-WD-jej"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Return">
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="14"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="returnButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MdB-hn-CWY"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LHc-NL-emV" secondAttribute="trailing" constant="25" id="4Eu-qs-YGf"/>
+                            <constraint firstItem="uPK-9T-bxK" firstAttribute="top" secondItem="6Sn-Bc-yWv" secondAttribute="bottom" constant="15" id="GyQ-L6-ZdQ"/>
+                            <constraint firstItem="QDx-lN-FT3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="25" id="HLM-WA-E3S"/>
+                            <constraint firstItem="K0h-sJ-1SG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="25" id="JTO-cb-CIm"/>
+                            <constraint firstItem="LHc-NL-emV" firstAttribute="leading" secondItem="uPK-9T-bxK" secondAttribute="trailing" constant="20" id="K70-4J-dzs"/>
+                            <constraint firstItem="6Sn-Bc-yWv" firstAttribute="leading" secondItem="QDx-lN-FT3" secondAttribute="trailing" constant="15" id="OVP-Cl-xm9"/>
+                            <constraint firstItem="LHc-NL-emV" firstAttribute="centerY" secondItem="uPK-9T-bxK" secondAttribute="centerY" id="QVb-me-Bf3"/>
+                            <constraint firstItem="LHc-NL-emV" firstAttribute="height" secondItem="uPK-9T-bxK" secondAttribute="height" id="cH3-Sp-hq7"/>
+                            <constraint firstItem="uPK-9T-bxK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="25" id="cMG-oT-pI8"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6Sn-Bc-yWv" secondAttribute="trailing" constant="25" id="cux-Jg-de0"/>
+                            <constraint firstItem="uPK-9T-bxK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="fVb-Os-qvh"/>
+                            <constraint firstItem="uPK-9T-bxK" firstAttribute="top" secondItem="QDx-lN-FT3" secondAttribute="bottom" constant="15" id="k0V-4J-lck"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="K0h-sJ-1SG" secondAttribute="trailing" constant="25" id="loK-Jv-RPR"/>
+                            <constraint firstItem="QDx-lN-FT3" firstAttribute="top" secondItem="K0h-sJ-1SG" secondAttribute="bottom" constant="20" id="vjE-Ph-HV2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="certificatePinningSwitch" destination="6Sn-Bc-yWv" id="nPc-CU-swd"/>
+                        <outlet property="returnButton" destination="LHc-NL-emV" id="4mc-Px-m7u"/>
+                        <outlet property="textField" destination="uPK-9T-bxK" id="f1c-bN-IDq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="20" y="98"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
