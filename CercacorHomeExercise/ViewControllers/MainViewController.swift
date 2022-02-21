@@ -21,7 +21,6 @@ class MainViewController: UIViewController {
         self.certificatePinningSwitch.tintColor = .clear
         self.certificatePinningSwitch.isEnabled = false
         self.textField.text = "https://www.google.com"
-        // Do any additional setup after loading the view.
     }
     
     private func presentAlert(_ message: String) {
@@ -44,6 +43,7 @@ class MainViewController: UIViewController {
         self.certificatePinningSwitch.isEnabled = self.pinningSwitch.isOn
     }
     
+
     @IBAction func returnButtonPressed(_ sender: Any) {
         self.performCertificateValidation()
     }

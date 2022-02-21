@@ -49,7 +49,7 @@ class PinningManager: NSObject, URLSessionDelegate {
                 let policy = NSMutableArray()
                 policy.add(SecPolicyCreateSSL(true, challenge.protectionSpace.host as CFString))
                 
-                // Let swift Security library check if certificate is trusted
+                // Let swift check if certificate is trusted
                 let isSecuredServer = SecTrustEvaluateWithError(serverTrust, nil)
                 
                 // Get data from certificate we got
@@ -77,7 +77,7 @@ class PinningManager: NSObject, URLSessionDelegate {
                     let data:Data = serverPublicKeyData! as Data
                     let serverHashKey = sha256(data: data)
                     
-                    // If remote public key and our local hardcoded public keys are equal then validation was successful
+                    // If remote and our local hardcoded public keys are equal then validation was successful
                     if serverHashKey == self.hardcodedPublicKey {
                         print("public key Pinning Completed Successfully")
                         completionHandler(.useCredential, URLCredential.init(trust: serverTrust))
@@ -87,20 +87,16 @@ class PinningManager: NSObject, URLSessionDelegate {
                 }
             }
         } else {
-            let certificate = SecTrustGetCertificateAtIndex(serverTrust, 0)
-            
             let policy = NSMutableArray()
             policy.add(SecPolicyCreateSSL(true, challenge.protectionSpace.host as CFString))
             
-            // Let swift Security library check if certificate is trusted
+            // Let swift check if certificate is trusted
             let isSecured = SecTrustEvaluateWithError(serverTrust, nil)
             if isSecured {
                 completionHandler(.useCredential, URLCredential.init(trust: serverTrust))
             } else {
                 completionHandler(.cancelAuthenticationChallenge, nil)
             }
-            
-
         }
     }
     
@@ -116,7 +112,7 @@ class PinningManager: NSObject, URLSessionDelegate {
                     completion("Something went wrong. Possibly certificate is untrusted")
                 }
             }
-            if let data = data {
+            if let _ = data {
                 
 //                let str = String(decoding: data, as: UTF8.self)
 //                print(str)
